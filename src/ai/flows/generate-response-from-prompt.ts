@@ -25,32 +25,53 @@ export type GenerateResponseOutput = z.infer<typeof GenerateResponseOutputSchema
 const offlineResponses: {keywords: string[]; response: string}[] = [
   {
     keywords: ['hello', 'hi', 'hey'],
-    response: "Hello there! I'm Nova, running in offline mode. How can I assist you today?",
+    response: "Hello there! I'm Nova. How can I assist you today?",
   },
   {
     keywords: ['how are you', 'how is it going'],
-    response: "I'm a computer program, so I don't have feelings, but I'm operating at full capacity! Thanks for asking.",
+    response: "I'm operating at full capacity! Thanks for asking. What's on your mind?",
   },
   {
-    keywords: ['help', 'support'],
-    response: "I can help with some basic questions while offline. Try asking me about what I can do or who created me.",
+    keywords: ['help', 'support', 'what can you do'],
+    response: "I can answer questions, tell jokes, and have a simple conversation. Feel free to ask me anything!",
   },
   {
     keywords: ['who are you', 'what are you'],
-    response: "I am Nova, an AI assistant. I'm currently running in a special offline mode, so my abilities are a bit limited.",
+    response: "I am Nova, an AI assistant designed to be helpful and engaging.",
   },
   {
     keywords: ['who made you', 'who created you', 'developer'],
-    response: 'I was created by a talented developer using Firebase and Genkit. Connect me to the internet to see my full potential!',
+    response: 'I was created by a talented developer using some very clever code!',
   },
   {
     keywords: ['joke', 'funny'],
-    response: "Why don't scientists trust atoms? Because they make up everything! (Offline humor has its limits!)",
+    response: "Why don't scientists trust atoms? Because they make up everything!",
   },
+  {
+    keywords: ['thank you', 'thanks'],
+    response: "You're welcome! Is there anything else I can help you with?",
+  },
+  {
+    keywords: ['bye', 'goodbye'],
+    response: 'Goodbye! Have a great day!',
+  },
+  {
+    keywords: ['what is your name'],
+    response: "My name is Nova. It's a pleasure to chat with you!",
+  },
+  {
+    keywords: ['what time is it', 'current time'],
+    response: "I can't check the real-world time, but I can tell you it's always the right time to learn something new!",
+  }
 ];
 
-const defaultOfflineResponse =
-  "I'm currently running in offline mode, so I can only have a basic conversation. Please connect to the internet to chat with the full-power Nova AI.";
+const defaultOfflineResponses = [
+  "That's an interesting question. I'll have to think about that.",
+  "I'm not quite sure how to answer that. Could you try rephrasing?",
+  "I'm still learning and don't have information on that topic. How about we talk about something else?",
+  "Let's change the subject. Did you know that the honeybee is the only insect that produces food eaten by man?",
+  "I'm afraid I don't have the answer to that. Can I help with something else?",
+];
 
 export async function generateResponse(input: GenerateResponseInput): Promise<GenerateResponseOutput> {
   const prompt = input.prompt.toLowerCase();
@@ -63,8 +84,9 @@ export async function generateResponse(input: GenerateResponseInput): Promise<Ge
     }
   }
 
-  // If no keyword is matched, return a default offline response.
+  // If no keyword is matched, return a random default response.
+  const randomIndex = Math.floor(Math.random() * defaultOfflineResponses.length);
   return Promise.resolve({
-    response: defaultOfflineResponse
+    response: defaultOfflineResponses[randomIndex]
   });
 }
