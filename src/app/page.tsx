@@ -1,3 +1,9 @@
+import { ChatPanel } from '@/components/chat/chat-panel';
+
 export default function Home() {
-  return <></>;
+  return (
+    <main className="flex h-[100dvh] flex-col items-center justify-center bg-background">
+      <ChatPanel />
+    </main>
+  );
 }
