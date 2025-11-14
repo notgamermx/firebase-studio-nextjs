@@ -5,6 +5,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Nova',
   description: 'Engage in AI-powered conversations.',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -25,6 +26,21 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
           rel="stylesheet"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                  }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                  });
+                });
+              }
+            `,
+          }}
+        ></script>
       </head>
       <body className="font-body antialiased">
         {children}
